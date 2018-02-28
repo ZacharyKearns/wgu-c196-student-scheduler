@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Student Scheduler</string>
+    <string name="main_button_terms">Terms</string>
+    <string name="main_button_courses">Courses</string>
+    <string name="main_button_mentors">Mentors</string>
+    <string name="view_term">View Term</string>
+    <string name="term_arrow"><![CDATA[>]]></string>
+    <string name="text_term">TextView</string>
+    <string name="term_start_date">Start Date:</string>
+    <string name="term_start_date_value">2018-01-01</string>
+    <string name="term_end_date">End Date:</string>
+    <string name="term_end_date_value">2018-06-06</string>
+    <string name="term_course">Courses</string>
+    <string name="term_title">Title</string>
+</resources>
