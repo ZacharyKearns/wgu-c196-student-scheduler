@@ -1,8 +1,14 @@
 package ca.zacharykearns.studentscheduler.db;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+
+import ca.zacharykearns.studentscheduler.model.Term;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -101,6 +107,57 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        sqLiteDatabase.execSQL(
+                "DROP TABLE IF EXISTS " + TERM_TABLE_NAME + ";" +
+                "DROP TABLE IF EXISTS " + MENTOR_TABLE_NAME + ";" +
+                "DROP TABLE IF EXISTS " + COURSE_TABLE_NAME + ";" +
+                "DROP TABLE IF EXISTS " + TERM_COURSE_TABLE_NAME + ";" +
+                "DROP TABLE IF EXISTS " + MENTOR_COURSE_TABLE_NAME + ";" +
+                "DROP TABLE IF EXISTS " + NOTE_TABLE_NAME + ";" +
+                "DROP TABLE IF EXISTS " + ASSESSMENT_TABLE_NAME + ";"
+        );
+        onCreate(sqLiteDatabase);
+    }
 
+    public boolean insertTerm(String title, String start, String end) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(TERM_COLUMN_TITLE, title);
+        cv.put(TERM_COLUMN_START, start);
+        cv.put(TERM_COLUMN_END, end);
+        db.insert(TERM_TABLE_NAME, null, cv);
+        return true;
+    }
+
+    public boolean updateTerm(int id, String title, String start, String end) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(TERM_COLUMN_TITLE, title);
+        cv.put(TERM_COLUMN_START, start);
+        cv.put(TERM_COLUMN_END, end);
+        db.update(
+                TERM_TABLE_NAME,
+                cv,
+                TERM_COLUMN_ID + " = ? ",
+                new String[] { Integer.toString(id) }
+                );
+        return true;
+    }
+
+    public ArrayList<Term> getTerms() {
+        ArrayList<Term> a = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + TERM_TABLE_NAME, null);
+        res.moveToFirst();
+        while (!res.isAfterLast()) {
+            int mId = res.getInt(0);
+            String mTitle = res.getString(1);
+            String mStart = res.getString(2);
+            String mEnd = res.getString(3);
+            a.add(new Term(mId, mTitle, mStart, mEnd));
+            res.moveToNext();
+        }
+        res.close();
+        return a;
     }
 }
