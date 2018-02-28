@@ -19,7 +19,10 @@
         <activity
             android:name=".TermListActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".TermDetailsActivity"
+        <activity
+            android:name=".TermDetailsActivity"
+            android:parentActivityName=".TermListActivity" />
+        <activity android:name=".AddTermActivity"
             android:parentActivityName=".TermListActivity"></activity>
     </application>
 
