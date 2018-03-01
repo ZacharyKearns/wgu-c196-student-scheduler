@@ -3,7 +3,6 @@ package ca.zacharykearns.studentscheduler;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +28,26 @@ public class TermListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_term);
         setTitle("Terms");
         mDBHelper = new DBHelper(this);
+        setTermListView();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.list_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_add:
+                return startAddTermActivity(item.getTitle().toString());
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void setTermListView() {
         final ArrayList<Term> mTermList = mDBHelper.getTerms();
         ListAdapter mAdapter = new TermListAdapter(this, mTermList);
         ListView mListView = findViewById(R.id.list_view_terms);
@@ -46,21 +65,10 @@ public class TermListActivity extends AppCompatActivity {
         );
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.term_list_menu, menu);
+    private boolean startAddTermActivity(String type) {
+        Intent i = new Intent(this, AddTermActivity.class);
+        i.putExtra("type", type);
+        startActivity(i);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_add_term) {
-            Intent i = new Intent(this, AddTermActivity.class);
-            i.putExtra("type", item.getTitle().toString());
-            startActivity(i);
-            return true;
-        } else {
-            return super.onOptionsItemSelected(item);
-        }
     }
 }

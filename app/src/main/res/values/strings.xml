@@ -18,4 +18,21 @@
     <string name="end_date_label">End Date:</string>
     <string name="button_term_save">Save</string>
     <string name="menu_edit_term_text">EDIT</string>
+    <string name="course_list_title">TextView</string>
+    <string name="course_list_view_course">View Course</string>
+    <string name="course_list_arrow"><![CDATA[>]]></string>
+    <string name="course_title">Course Title</string>
+    <string name="course_start_date">Start Date:</string>
+    <string name="course_start_date_value">2018-01-01</string>
+    <string name="course_end_date">End Date:</string>
+    <string name="course_end_date_value">2018-01-01</string>
+    <string name="course_status">Status:</string>
+    <string name="course_status_value">2018-01-01</string>
+    <string name="assessments_heading">Assessments</string>
+    <string name="course_start_alert_label">Course Start Alert:</string>
+    <string name="course_start_alert_value">ON</string>
+    <string name="course_end_alert_value">ON</string>
+    <string name="course_end_alert_label">Course End Alert:</string>
+    <string name="button_view_courses">View Courses</string>
+    <string name="details_menu_delete">DELETE</string>
 </resources>

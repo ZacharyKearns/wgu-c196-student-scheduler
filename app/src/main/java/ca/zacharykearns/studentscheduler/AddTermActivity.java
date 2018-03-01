@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,6 +22,7 @@ public class AddTermActivity extends AppCompatActivity {
     private EditText mStartInput;
     private EditText mEndInput;
     private Intent mIntent;
+    private Term mTerm;
 
 
     @Override
@@ -32,21 +35,44 @@ public class AddTermActivity extends AppCompatActivity {
         mStartInput = findViewById(R.id.start_input);
         mEndInput = findViewById(R.id.end_input);
         mIntent = getIntent();
-        if (mIntent.getStringExtra("type").equals("EDIT")) {
-            Term term = (Term) mIntent.getSerializableExtra("term");
-            mTitleInput.setText(term.getmTitle());
-            mStartInput.setText(term.getmStart());
-            mEndInput.setText(term.getmEnd());
+        mTerm = mIntent.getStringExtra("type").equals("ADD") ?
+                null : mDBHelper.getTerm(((Term) mIntent.getSerializableExtra("term")).getmTermId());
+        setInputs();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.add_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_save:
+                return saveTerm();
+            case R.id.menu_cancel:
+                return startPreviousActivity();
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
-    public void onSave(View view) {
-        if (mTitleInput.getText().toString().equals("")) {
+    private void setInputs() {
+        if (mIntent.getStringExtra("type").equals("EDIT")) {
+            mTitleInput.setText(mTerm.getmTitle());
+            mStartInput.setText(mTerm.getmStart());
+            mEndInput.setText(mTerm.getmEnd());
+        }
+    }
+
+    private boolean saveTerm() {
+        if (mTitleInput.getText().toString().trim().equals("")) {
             Toast.makeText(getBaseContext(), "Title can't be empty", Toast.LENGTH_SHORT).show();
-        } else if (mStartInput.getText().toString().equals("")) {
-            Toast.makeText(getBaseContext(), "Start date can't be empty", Toast.LENGTH_SHORT).show();
-        } else if (mEndInput.getText().toString().equals("")) {
-            Toast.makeText(getBaseContext(), "End date can't be empty", Toast.LENGTH_SHORT).show();
+        } else if (!Util.checkDate(mStartInput.getText().toString())) {
+            Toast.makeText(getBaseContext(), "Invalid start date", Toast.LENGTH_SHORT).show();
+        } else if (!Util.checkDate(mEndInput.getText().toString())) {
+            Toast.makeText(getBaseContext(), "Invalid end date", Toast.LENGTH_SHORT).show();
         } else {
             if (mIntent.getStringExtra("type").equals("ADD")) {
                 if (mDBHelper.insertTerm(
@@ -59,9 +85,8 @@ public class AddTermActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "Add Failed", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Term term = (Term) mIntent.getSerializableExtra("term");
                 if (mDBHelper.updateTerm(
-                        term.getmTermId(),
+                        mTerm.getmTermId(),
                         mTitleInput.getText().toString(),
                         mStartInput.getText().toString(),
                         mEndInput.getText().toString()
@@ -71,8 +96,21 @@ public class AddTermActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "Add Failed", Toast.LENGTH_SHORT).show();
                 }
             }
-            Intent i = new Intent(this, TermListActivity.class);
-            startActivity(i);
+            startPreviousActivity();
         }
+        return true;
+    }
+
+    private boolean startPreviousActivity() {
+        String previous = mIntent.getStringExtra("type");
+        Intent i;
+        if (previous.equals("ADD")) {
+            i = new Intent(this, TermListActivity.class);
+        } else {
+            i = new Intent(this, TermDetailsActivity.class);
+            i.putExtra("term", mTerm);
+        }
+        startActivity(i);
+        return true;
     }
 }

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
+import ca.zacharykearns.studentscheduler.model.Course;
 import ca.zacharykearns.studentscheduler.model.Term;
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -18,25 +19,19 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String TERM_COLUMN_TITLE = "title";
     private static final String TERM_COLUMN_START = "start_date";
     private static final String TERM_COLUMN_END = "end_date";
-    private static final String MENTOR_TABLE_NAME = "mentor";
-    private static final String MENTOR_COLUMN_ID = "mentor_id";
-    private static final String MENTOR_COLUMN_NAME = "name";
-    private static final String MENTOR_COLUMN_PHONE = "phone";
-    private static final String MENTOR_COLUMN_EMAIL = "email";
     private static final String COURSE_TABLE_NAME = "course";
     private static final String COURSE_COLUMN_ID = "course_id";
     private static final String COURSE_COLUMN_TITLE = "title";
     private static final String COURSE_COLUMN_STATUS = "status";
     private static final String COURSE_COLUMN_START = "start_date";
     private static final String COURSE_COLUMN_END = "end_date";
-    private static final String TERM_COURSE_TABLE_NAME = "term_course";
-    private static final String TERM_COURSE_COLUMN_ID = "term_course_id";
-    private static final String TERM_COURSE_COLUMN_TERM_ID = "term_id";
-    private static final String TERM_COURSE_COLUMN_COURSE_ID = "course_id";
-    private static final String MENTOR_COURSE_TABLE_NAME = "mentor_course";
-    private static final String MENTOR_COURSE_COLUMN_ID = "mentor_course_id";
-    private static final String MENTOR_COURSE_COLUMN_MENTOR_ID = "mentor_id";
-    private static final String MENTOR_COURSE_COLUMN_COURSE_ID = "course_id";
+    private static final String COURSE_COLUMN_TERM_ID = "term_id";
+    private static final String MENTOR_TABLE_NAME = "mentor";
+    private static final String MENTOR_COLUMN_ID = "mentor_id";
+    private static final String MENTOR_COLUMN_NAME = "name";
+    private static final String MENTOR_COLUMN_PHONE = "phone";
+    private static final String MENTOR_COLUMN_EMAIL = "email";
+    private static final String MENTOR_COLUMN_COURSE_ID = "course_id";
     private static final String NOTE_TABLE_NAME = "note";
     private static final String NOTE_COLUMN_ID = "note_id";
     private static final String NOTE_COLUMN_NOTE = "note";
@@ -55,54 +50,51 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(
-
                 "CREATE TABLE " + TERM_TABLE_NAME + "(" +
                 TERM_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 TERM_COLUMN_TITLE + " TEXT NOT NULL," +
                 TERM_COLUMN_START + " TEXT NOT NULL," +
-                TERM_COLUMN_END + " TEXT NOT NULL);" +
+                TERM_COLUMN_END + " TEXT NOT NULL);");
 
-                "CREATE TABLE " + MENTOR_TABLE_NAME + "(" +
-                MENTOR_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                MENTOR_COLUMN_NAME + " TEXT NOT NULL," +
-                MENTOR_COLUMN_PHONE + " TEXT NOT NULL," +
-                MENTOR_COLUMN_EMAIL + " TEXT NOT NULL);" +
-
+        sqLiteDatabase.execSQL(
                 "CREATE TABLE " + COURSE_TABLE_NAME + "(" +
                 COURSE_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COURSE_COLUMN_TITLE + " TEXT NOT NULL," +
                 COURSE_COLUMN_STATUS + " TEXT NOT NULL," +
                 COURSE_COLUMN_START + " TEXT NOT NULL," +
-                COURSE_COLUMN_END + " TEXT NOT NULL);" +
+                COURSE_COLUMN_END + " TEXT NOT NULL," +
+                COURSE_COLUMN_TERM_ID + " INTEGER NOT NULL," +
+                "FOREIGN KEY(" + COURSE_COLUMN_TERM_ID + ") " +
+                "REFERENCES " + TERM_TABLE_NAME + "(" + TERM_COLUMN_ID + "));");
 
-                "CREATE TABLE " + TERM_COURSE_TABLE_NAME + "(" +
-                TERM_COURSE_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "FOREIGN KEY(" + TERM_COURSE_COLUMN_TERM_ID + ") " +
-                "REFERENCES " + TERM_TABLE_NAME + "(" + TERM_COLUMN_ID + ")," +
-                "FOREIGN KEY(" + TERM_COURSE_COLUMN_COURSE_ID + ") " +
-                "REFERENCES " + COURSE_TABLE_NAME + "(" + COURSE_COLUMN_ID + "));" +
+        sqLiteDatabase.execSQL(
+                "CREATE TABLE " + MENTOR_TABLE_NAME + "(" +
+                MENTOR_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                MENTOR_COLUMN_NAME + " TEXT NOT NULL," +
+                MENTOR_COLUMN_PHONE + " TEXT NOT NULL," +
+                MENTOR_COLUMN_EMAIL + " TEXT NOT NULL," +
+                MENTOR_COLUMN_COURSE_ID + " INTEGER NOT NULL," +
+                "FOREIGN KEY(" + MENTOR_COLUMN_COURSE_ID + ") " +
+                "REFERENCES " + COURSE_TABLE_NAME + "(" + COURSE_COLUMN_ID + "));");
 
-                "CREATE TABLE " + MENTOR_COURSE_TABLE_NAME + "(" +
-                MENTOR_COURSE_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "FOREIGN KEY(" + MENTOR_COURSE_COLUMN_MENTOR_ID + ") " +
-                "REFERENCES " + MENTOR_TABLE_NAME + "(" + MENTOR_COLUMN_ID + ")," +
-                "FOREIGN KEY(" + MENTOR_COURSE_COLUMN_COURSE_ID + ") " +
-                "REFERENCES " + COURSE_TABLE_NAME + "(" + COURSE_COLUMN_ID + "));" +
-
+        sqLiteDatabase.execSQL(
                 "CREATE TABLE " + NOTE_TABLE_NAME + "(" +
                 NOTE_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 NOTE_COLUMN_NOTE + " TEXT NOT NULL," +
+                NOTE_COLUMN_COURSE_ID + " INTEGER NOT NULL," +
                 "FOREIGN KEY(" + NOTE_COLUMN_COURSE_ID + ") " +
-                "REFERENCES " + COURSE_TABLE_NAME + "(" + COURSE_COLUMN_ID + "));" +
+                "REFERENCES " + COURSE_TABLE_NAME + "(" + COURSE_COLUMN_ID + "));");
 
+        sqLiteDatabase.execSQL(
                 "CREATE TABLE " + ASSESSMENT_TABLE_NAME + "(" +
                 ASSESSMENT_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 ASSESSMENT_COLUMN_TITLE + " TEXT NOT NULL," +
                 ASSESSMENT_COLUMN_TYPE + " TEXT NOT NULL," +
                 ASSESSMENT_COLUMN_DUE + " TEXT NOT NULL," +
+                ASSESSMENT_COLUMN_COURSE_ID + " INTEGER NOT NULL," +
                 "FOREIGN KEY(" + ASSESSMENT_COLUMN_COURSE_ID + ") " +
-                "REFERENCES " + COURSE_TABLE_NAME + "(" + COURSE_COLUMN_ID + "));"
-        );
+                "REFERENCES " + COURSE_TABLE_NAME + "(" + COURSE_COLUMN_ID + "));");
+
     }
 
     @Override
@@ -111,12 +103,14 @@ public class DBHelper extends SQLiteOpenHelper {
                 "DROP TABLE IF EXISTS " + TERM_TABLE_NAME + ";" +
                 "DROP TABLE IF EXISTS " + MENTOR_TABLE_NAME + ";" +
                 "DROP TABLE IF EXISTS " + COURSE_TABLE_NAME + ";" +
-                "DROP TABLE IF EXISTS " + TERM_COURSE_TABLE_NAME + ";" +
-                "DROP TABLE IF EXISTS " + MENTOR_COURSE_TABLE_NAME + ";" +
                 "DROP TABLE IF EXISTS " + NOTE_TABLE_NAME + ";" +
                 "DROP TABLE IF EXISTS " + ASSESSMENT_TABLE_NAME + ";"
         );
         onCreate(sqLiteDatabase);
+    }
+
+    public void onUpgrade1() {
+        onUpgrade(this.getWritableDatabase(), 1, 1);
     }
 
     public boolean insertTerm(String title, String start, String end) {
@@ -144,6 +138,29 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public boolean deleteTerm(int termId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TERM_TABLE_NAME, TERM_COLUMN_ID + " = " + termId, null);
+        return true;
+    }
+
+    public Term getTerm(int termId) {
+        Term term;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery(
+                "SELECT * FROM " + TERM_TABLE_NAME + " WHERE " + TERM_COLUMN_ID + " = " + termId,
+                null
+        );
+        res.moveToFirst();
+        term = new Term(
+                res.getInt(0),
+                res.getString(1),
+                res.getString(2),
+                res.getString(3)
+        );
+        return term;
+    }
+
     public ArrayList<Term> getTerms() {
         ArrayList<Term> a = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -155,6 +172,27 @@ public class DBHelper extends SQLiteOpenHelper {
             String mStart = res.getString(2);
             String mEnd = res.getString(3);
             a.add(new Term(mId, mTitle, mStart, mEnd));
+            res.moveToNext();
+        }
+        res.close();
+        return a;
+    }
+
+    public ArrayList<Course> getCourses(int termId) {
+        ArrayList<Course> a = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery(
+                "SELECT * FROM " + COURSE_TABLE_NAME + " WHERE " + COURSE_COLUMN_TERM_ID + " = " + termId,
+                null);
+        res.moveToFirst();
+        while (!res.isAfterLast()) {
+            int mId = res.getInt(0);
+            String mTitle = res.getString(1);
+            String mStatus = res.getString(2);
+            String mStart = res.getString(3);
+            String mEnd = res.getString(4);
+            int mTermId = res.getInt(5);
+            a.add(new Course(mId, mTitle, mStatus, mStart, mEnd, mTermId));
             res.moveToNext();
         }
         res.close();
