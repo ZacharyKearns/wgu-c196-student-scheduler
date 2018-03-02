@@ -1,4 +1,4 @@
-package ca.zacharykearns.studentscheduler.db;
+package ca.zacharykearns.studentscheduler.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,17 +8,21 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
-import ca.zacharykearns.studentscheduler.model.Course;
-import ca.zacharykearns.studentscheduler.model.Term;
+import ca.zacharykearns.studentscheduler.models.Assessment;
+import ca.zacharykearns.studentscheduler.models.Course;
+import ca.zacharykearns.studentscheduler.models.Mentor;
+import ca.zacharykearns.studentscheduler.models.Term;
 
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "student_scheduler.db";
+
     private static final String TERM_TABLE_NAME = "term";
     private static final String TERM_COLUMN_ID = "term_id";
     private static final String TERM_COLUMN_TITLE = "title";
     private static final String TERM_COLUMN_START = "start_date";
     private static final String TERM_COLUMN_END = "end_date";
+
     private static final String COURSE_TABLE_NAME = "course";
     private static final String COURSE_COLUMN_ID = "course_id";
     private static final String COURSE_COLUMN_TITLE = "title";
@@ -26,16 +30,19 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String COURSE_COLUMN_START = "start_date";
     private static final String COURSE_COLUMN_END = "end_date";
     private static final String COURSE_COLUMN_TERM_ID = "term_id";
+
     private static final String MENTOR_TABLE_NAME = "mentor";
     private static final String MENTOR_COLUMN_ID = "mentor_id";
     private static final String MENTOR_COLUMN_NAME = "name";
     private static final String MENTOR_COLUMN_PHONE = "phone";
     private static final String MENTOR_COLUMN_EMAIL = "email";
     private static final String MENTOR_COLUMN_COURSE_ID = "course_id";
+
     private static final String NOTE_TABLE_NAME = "note";
     private static final String NOTE_COLUMN_ID = "note_id";
     private static final String NOTE_COLUMN_NOTE = "note";
     private static final String NOTE_COLUMN_COURSE_ID= "course_id";
+
     private static final String ASSESSMENT_TABLE_NAME = "assessment";
     private static final String ASSESSMENT_COLUMN_ID = "assessment_id";
     private static final String ASSESSMENT_COLUMN_TITLE = "title";
@@ -123,6 +130,44 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public boolean insertCourse(
+            String title,
+            String start,
+            String end,
+            String status,
+            int termId,
+            ArrayList<Mentor> mentors
+    ) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COURSE_COLUMN_TITLE, title);
+        cv.put(COURSE_COLUMN_START, start);
+        cv.put(COURSE_COLUMN_END, end);
+        cv.put(COURSE_COLUMN_STATUS, status);
+        cv.put(COURSE_COLUMN_TERM_ID, termId);
+        long mCourseId = db.insert(COURSE_TABLE_NAME, null, cv);
+        for (Mentor mentor : mentors) {
+            ContentValues cv1 = new ContentValues();
+            cv1.put(MENTOR_COLUMN_NAME, mentor.getmName());
+            cv1.put(MENTOR_COLUMN_PHONE, mentor.getmPhone());
+            cv1.put(MENTOR_COLUMN_EMAIL, mentor.getmEmail());
+            cv1.put(MENTOR_COLUMN_COURSE_ID, mCourseId);
+            db.insert(MENTOR_TABLE_NAME, null, cv1);
+        }
+        return true;
+    }
+
+    public boolean insertAssessment(String title, String type, String due, int courseId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(ASSESSMENT_COLUMN_TITLE, title);
+        cv.put(ASSESSMENT_COLUMN_TYPE, type);
+        cv.put(ASSESSMENT_COLUMN_DUE, due);
+        cv.put(ASSESSMENT_COLUMN_COURSE_ID, courseId);
+        db.insert(ASSESSMENT_TABLE_NAME, null, cv);
+        return true;
+    }
+
     public boolean updateTerm(int id, String title, String start, String end) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -138,9 +183,62 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public boolean updateCourse(
+            int id,
+            String title,
+            String start,
+            String end,
+            String status,
+            ArrayList<Mentor> mentors
+    ) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COURSE_COLUMN_TITLE, title);
+        cv.put(COURSE_COLUMN_START, start);
+        cv.put(COURSE_COLUMN_END, end);
+        cv.put(COURSE_COLUMN_STATUS, status);
+        db.update(
+                COURSE_TABLE_NAME,
+                cv,
+                COURSE_COLUMN_ID + " = ? ",
+                new String[] { Integer.toString(id) }
+        );
+        db.delete(MENTOR_TABLE_NAME, MENTOR_COLUMN_COURSE_ID + " = " + id, null);
+        for (Mentor mentor : mentors) {
+            ContentValues cv1 = new ContentValues();
+            cv1.put(MENTOR_COLUMN_NAME, mentor.getmName());
+            cv1.put(MENTOR_COLUMN_PHONE, mentor.getmPhone());
+            cv1.put(MENTOR_COLUMN_EMAIL, mentor.getmEmail());
+            cv1.put(MENTOR_COLUMN_COURSE_ID, id);
+            db.insert(MENTOR_TABLE_NAME, null, cv1);
+        }
+        return true;
+    }
+
+    public boolean updateAssessment(int id, String title, String type, String due) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(ASSESSMENT_COLUMN_TITLE, title);
+        cv.put(ASSESSMENT_COLUMN_TYPE, type);
+        cv.put(ASSESSMENT_COLUMN_DUE, due);
+        db.update(
+                ASSESSMENT_TABLE_NAME,
+                cv,
+                ASSESSMENT_COLUMN_ID + " = ?",
+                new String[] { Integer.toString(id) }
+        );
+        return true;
+    }
+
     public boolean deleteTerm(int termId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TERM_TABLE_NAME, TERM_COLUMN_ID + " = " + termId, null);
+        return true;
+    }
+
+    public boolean deleteAssessment(int assessmentId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(ASSESSMENT_TABLE_NAME, ASSESSMENT_COLUMN_ID + " = " + assessmentId, null);
         return true;
     }
 
@@ -159,6 +257,43 @@ public class DBHelper extends SQLiteOpenHelper {
                 res.getString(3)
         );
         return term;
+    }
+
+    public Course getCourse(int courseId) {
+        Course course;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery(
+                "SELECT * FROM " + COURSE_TABLE_NAME + " WHERE " + COURSE_COLUMN_ID + " = " + courseId,
+                null
+        );
+        res.moveToFirst();
+        course = new Course(
+                res.getInt(0),
+                res.getString(1),
+                res.getString(2),
+                res.getString(3),
+                res.getString(4),
+                res.getInt(5)
+        );
+        return course;
+    }
+
+    public Assessment getAssessment(int assessmentId) {
+        Assessment assessment;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery(
+                "SELECT * FROM " + ASSESSMENT_TABLE_NAME + " WHERE " + ASSESSMENT_COLUMN_ID + " = " + assessmentId,
+                null
+        );
+        res.moveToFirst();
+        assessment = new Assessment(
+                res.getInt(0),
+                res.getString(1),
+                res.getString(2),
+                res.getString(3),
+                res.getInt(4)
+        );
+        return assessment;
     }
 
     public ArrayList<Term> getTerms() {
@@ -193,6 +328,46 @@ public class DBHelper extends SQLiteOpenHelper {
             String mEnd = res.getString(4);
             int mTermId = res.getInt(5);
             a.add(new Course(mId, mTitle, mStatus, mStart, mEnd, mTermId));
+            res.moveToNext();
+        }
+        res.close();
+        return a;
+    }
+
+    public ArrayList<Mentor> getMentors(int courseId) {
+        ArrayList<Mentor> a = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery(
+                "SELECT * FROM " + MENTOR_TABLE_NAME + " WHERE " + MENTOR_COLUMN_COURSE_ID + " = " + courseId,
+                null
+        );
+        res.moveToFirst();
+        while (!res.isAfterLast()) {
+            String mName = res.getString(1);
+            String mPhone = res.getString(2);
+            String mEmail = res.getString(3);
+            a.add(new Mentor(mName, mPhone, mEmail));
+            res.moveToNext();
+        }
+        res.close();
+        return a;
+    }
+
+    public ArrayList<Assessment> getAssessments(int courseId) {
+        ArrayList<Assessment> a = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery(
+                "SELECT * FROM " + ASSESSMENT_TABLE_NAME + " WHERE " + ASSESSMENT_COLUMN_COURSE_ID + " = " + courseId,
+                null
+        );
+        res.moveToFirst();
+        while (!res.isAfterLast()) {
+            int mId = res.getInt(0);
+            String mTitle = res.getString(1);
+            String mType = res.getString(2);
+            String mDue = res.getString(3);
+            int mCourseId = res.getInt(4);
+            a.add(new Assessment(mId, mTitle, mType, mDue, mCourseId));
             res.moveToNext();
         }
         res.close();

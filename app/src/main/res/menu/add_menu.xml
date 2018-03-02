@@ -4,10 +4,10 @@
 
     <item
         android:id="@+id/menu_save"
-        android:title="SAVE"
+        android:title="@string/save_menu"
         app:showAsAction="always" />
     <item
         android:id="@+id/menu_cancel"
-        android:title="CANCEL"
+        android:title="@string/cancel_menu"
         app:showAsAction="always" />
 </menu>

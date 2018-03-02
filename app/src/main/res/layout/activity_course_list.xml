@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ca.zacharykearns.studentscheduler.CourseListActivity">
+    tools:context="ca.zacharykearns.studentscheduler.activities.course_activities.CourseListActivity">
 
     <ListView
         android:id="@+id/list_view_courses"

@@ -1,4 +1,4 @@
-package ca.zacharykearns.studentscheduler;
+package ca.zacharykearns.studentscheduler.activities.term_activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -12,9 +12,10 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import ca.zacharykearns.studentscheduler.adapter.TermListAdapter;
-import ca.zacharykearns.studentscheduler.db.DBHelper;
-import ca.zacharykearns.studentscheduler.model.Term;
+import ca.zacharykearns.studentscheduler.R;
+import ca.zacharykearns.studentscheduler.adapters.TermListAdapter;
+import ca.zacharykearns.studentscheduler.database.DBHelper;
+import ca.zacharykearns.studentscheduler.models.Term;
 
 public class TermListActivity extends AppCompatActivity {
 
@@ -41,7 +42,7 @@ public class TermListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_add:
-                return startAddTermActivity(item.getTitle().toString());
+                return switchActivity(AddTermActivity.class, item.getTitle().toString(), null);
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -57,17 +58,19 @@ public class TermListActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Term mTerm = (Term) adapterView.getAdapter().getItem(i);
-                        Intent intent = new Intent(view.getContext(), TermDetailsActivity.class);
-                        intent.putExtra("term", mTerm);
-                        startActivity(intent);
+                        switchActivity(TermDetailsActivity.class, null, mTerm);
                     }
                 }
         );
     }
 
-    private boolean startAddTermActivity(String type) {
-        Intent i = new Intent(this, AddTermActivity.class);
-        i.putExtra("type", type);
+    private boolean switchActivity(Class<?> cls, String type, Term term) {
+        Intent i = new Intent(this, cls);
+        if (cls.equals(AddTermActivity.class)) {
+            i.putExtra("type", type);
+        } else {
+            i.putExtra("term", term);
+        }
         startActivity(i);
         return true;
     }

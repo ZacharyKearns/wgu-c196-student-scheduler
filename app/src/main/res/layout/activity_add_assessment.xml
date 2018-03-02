@@ -31,43 +31,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:id="@+id/start_input_row"
+        android:id="@+id/type_input_row"
         android:layout_below="@id/title_input_row">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/start_date_label"
-            android:labelFor="@id/start_input"
+            android:text="@string/type_label"
+            android:labelFor="@id/type_spinner"
             android:textSize="20sp"
             android:textColor="#000"
             android:gravity="center_vertical"
             android:layout_marginEnd="10dp"/>
-        <EditText
-            android:id="@+id/start_input"
+        <Spinner
+            android:id="@+id/type_spinner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/date_format"/>
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:id="@+id/end_input_row"
-        android:layout_below="@id/start_input_row">
+        android:id="@+id/due_input_row"
+        android:layout_below="@id/type_input_row">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/end_date_label"
-            android:labelFor="@id/end_input"
+            android:text="@string/due_date_label"
+            android:labelFor="@id/due_input"
             android:textSize="20sp"
             android:textColor="#000"
             android:gravity="center_vertical"
             android:layout_marginEnd="10dp"/>
         <EditText
-            android:id="@+id/end_input"
+            android:id="@+id/due_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"

@@ -1,4 +1,4 @@
-package ca.zacharykearns.studentscheduler.adapter;
+package ca.zacharykearns.studentscheduler.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,12 +12,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import ca.zacharykearns.studentscheduler.R;
-import ca.zacharykearns.studentscheduler.model.Term;
+import ca.zacharykearns.studentscheduler.models.Course;
 
-public class TermListAdapter extends ArrayAdapter<Term> {
+public class CourseListAdapter extends ArrayAdapter<Course> {
 
-    public TermListAdapter(@NonNull Context context, ArrayList<Term> terms) {
-        super(context, R.layout.term_list_row, terms);
+    public CourseListAdapter(@NonNull Context context, ArrayList<Course> courses) {
+        super(context, R.layout.course_list_row, courses);
     }
 
     @NonNull
@@ -25,10 +25,10 @@ public class TermListAdapter extends ArrayAdapter<Term> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.term_list_row, parent, false);
-            Term mSingleTermItem = getItem(position);
-            TextView mTextTerm = convertView.findViewById(R.id.text_term);
-            mTextTerm.setText(mSingleTermItem.getmTitle());
+            convertView = inflater.inflate(R.layout.course_list_row, parent, false);
+            Course mSingleCourseItem = getItem(position);
+            TextView mTextCourse = convertView.findViewById(R.id.text_course);
+            mTextCourse.setText(mSingleCourseItem.getmTitle());
         }
         return convertView;
     }

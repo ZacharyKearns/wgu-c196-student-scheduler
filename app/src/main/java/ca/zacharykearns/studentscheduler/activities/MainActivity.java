@@ -1,11 +1,12 @@
-package ca.zacharykearns.studentscheduler;
+package ca.zacharykearns.studentscheduler.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import ca.zacharykearns.studentscheduler.db.DBHelper;
+import ca.zacharykearns.studentscheduler.R;
+import ca.zacharykearns.studentscheduler.activities.term_activities.TermListActivity;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/term_details_layout"
+    android:id="@+id/assessment_details_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/term_title"
+        android:id="@+id/assessment_title"
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_margin="8dp"
@@ -18,20 +18,19 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:orientation="horizontal"
-        android:id="@+id/term_start"
-        android:layout_below="@id/term_title">
+        android:id="@+id/assessment_type_row"
+        android:layout_below="@id/assessment_title">
         <TextView
-            android:id="@+id/term_start_date"
+            android:id="@+id/assessment_type_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/start_date_label"
+            android:text="@string/type_label"
             android:textColor="#000"
             android:textSize="30sp" />
         <TextView
-            android:id="@+id/term_start_date_value"
+            android:id="@+id/assessment_type_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/date_format"
             android:textSize="25sp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"/>
@@ -40,21 +39,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/term_start"
+        android:layout_below="@id/assessment_type_row"
         android:layout_margin="8dp"
         android:orientation="horizontal"
-        android:id="@+id/term_end">
-
+        android:id="@+id/assessment_due_row">
         <TextView
-            android:id="@+id/term_end_date"
+            android:id="@+id/assessment_due_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/end_date_label"
+            android:text="@string/due_date_label"
             android:textColor="#000"
             android:textSize="30sp" />
 
         <TextView
-            android:id="@+id/term_end_date_value"
+            android:id="@+id/assessment_due_date_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
@@ -62,13 +60,5 @@
             android:text="@string/date_format"
             android:textSize="25sp" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button_view_courses"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/term_end"
-        android:onClick="viewCoursesButtonClick"
-        android:text="@string/button_view_courses" />
 
 </RelativeLayout>

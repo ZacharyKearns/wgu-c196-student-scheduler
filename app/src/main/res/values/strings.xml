@@ -1,38 +1,53 @@
 <resources>
     <string name="app_name">Student Scheduler</string>
-    <string name="main_button_terms">Terms</string>
-    <string name="main_button_courses">Courses</string>
-    <string name="main_button_mentors">Mentors</string>
-    <string name="view_term">View Term</string>
-    <string name="term_arrow"><![CDATA[>]]></string>
-    <string name="text_term">TextView</string>
-    <string name="term_start_date">Start Date:</string>
-    <string name="term_start_date_value">2018-01-01</string>
-    <string name="term_end_date">End Date:</string>
-    <string name="term_end_date_value">2018-06-06</string>
-    <string name="term_course">Courses</string>
-    <string name="term_title">Title</string>
-    <string name="add_term_menu">ADD</string>
+
+    <!-- General Strings -->
     <string name="title_input_label">Title:</string>
     <string name="start_date_label">Start Date:</string>
     <string name="end_date_label">End Date:</string>
-    <string name="button_term_save">Save</string>
-    <string name="menu_edit_term_text">EDIT</string>
-    <string name="course_list_title">TextView</string>
-    <string name="course_list_view_course">View Course</string>
-    <string name="course_list_arrow"><![CDATA[>]]></string>
-    <string name="course_title">Course Title</string>
-    <string name="course_start_date">Start Date:</string>
-    <string name="course_start_date_value">2018-01-01</string>
-    <string name="course_end_date">End Date:</string>
-    <string name="course_end_date_value">2018-01-01</string>
-    <string name="course_status">Status:</string>
-    <string name="course_status_value">2018-01-01</string>
-    <string name="assessments_heading">Assessments</string>
+    <string name="course_status_label">Status:</string>
+    <string name="date_format">yyyy-mm-dd</string>
+    <string name="list_arrow"><![CDATA[>]]></string>
+
+    <!-- Menus -->
+    <string name="add_menu">ADD</string>
+    <string name="save_menu">SAVE</string>
+    <string name="cancel_menu">CANCEL</string>
+    <string name="edit_menu">EDIT</string>
+    <string name="delete_menu">DELETE</string>
+
+    <!-- activity_add_assessment -->
+    <string name="type_label">Type:</string>
+    <string name="due_date_label">Due Date:</string>
+
+    <!-- activity_add_course -->
+    <string name="course_mentors_label">Mentors</string>
+    <string name="course_mentors_name_heading">Name</string>
+    <string name="course_mentors_phone_heading">Phone</string>
+    <string name="course_mentors_email_heading">Email</string>
+    <string name="course_mentors_edit_heading">Edit</string>
+    <string name="course_mentors_delete_heading">Delete</string>
+    <string name="course_add_mentor_button">Add Mentor</string>
+
+    <!-- activity_course_details -->
     <string name="course_start_alert_label">Course Start Alert:</string>
     <string name="course_start_alert_value">ON</string>
-    <string name="course_end_alert_value">ON</string>
     <string name="course_end_alert_label">Course End Alert:</string>
+    <string name="course_end_alert_value">ON</string>
+    <string name="view_assessments">View Assessments</string>
+
+    <!-- activity_main -->
+    <string name="main_button_terms">Terms</string>
+
+    <!-- activity_term_details -->
     <string name="button_view_courses">View Courses</string>
-    <string name="details_menu_delete">DELETE</string>
+
+    <!-- assessment_list_row -->
+    <string name="assessment_list_view_assessment">View Assessment</string>
+
+    <!-- course_list_row -->
+    <string name="course_list_view_course">View Course</string>
+
+    <!-- term_list_row -->
+    <string name="view_term">View Term</string>
 </resources>

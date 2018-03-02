@@ -1,27 +1,23 @@
-package ca.zacharykearns.studentscheduler.model;
+package ca.zacharykearns.studentscheduler.models;
 
 import java.io.Serializable;
 
-public class Course implements Serializable {
+public class Term implements Serializable {
 
-    private int mCourseId;
+    private int mTermId;
     private String mTitle;
     private String mStart;
     private String mEnd;
-    private String mStatus;
-    private int mTermId;
 
-    public Course(int mCourseId, String mTitle, String mStatus, String mStart, String mEnd, int mTermId) {
-        this.mCourseId = mCourseId;
+    public Term(int mTermId, String mTitle, String mStart, String mEnd) {
+        this.mTermId = mTermId;
         this.mTitle = mTitle;
         this.mStart = mStart;
         this.mEnd = mEnd;
-        this.mStatus = mStatus;
-        this.mTermId = mTermId;
     }
 
-    public int getmCourseId() {
-        return mCourseId;
+    public int getmTermId() {
+        return mTermId;
     }
 
     public String getmTitle() {
@@ -46,18 +42,6 @@ public class Course implements Serializable {
 
     public void setmEnd(String mEnd) {
         this.mEnd = mEnd;
-    }
-
-    public String getmStatus() {
-        return mStatus;
-    }
-
-    public void setmStatus(String mStatus) {
-        this.mStatus = mStatus;
-    }
-
-    public int getmTermId() {
-        return mTermId;
     }
 
     @Override

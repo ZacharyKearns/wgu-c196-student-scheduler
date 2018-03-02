@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,16 +17,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TermListActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name=".activities.term_activities.TermListActivity"
+            android:parentActivityName=".activities.MainActivity" />
         <activity
-            android:name=".TermDetailsActivity"
-            android:parentActivityName=".TermListActivity" />
-        <activity
-            android:name=".AddTermActivity"/>
-        <activity android:name=".CourseListActivity"/>
-        <activity android:name=".CourseDetailsActivity"/>
-        <activity android:name=".AddCourseActivity"></activity>
+            android:name=".activities.term_activities.TermDetailsActivity"
+            android:parentActivityName=".activities.term_activities.TermListActivity" />
+        <activity android:name=".activities.term_activities.AddTermActivity" />
+        <activity android:name=".activities.course_activities.CourseListActivity" />
+        <activity android:name=".activities.course_activities.CourseDetailsActivity" />
+        <activity android:name=".activities.course_activities.AddCourseActivity" />
+        <activity android:name=".activities.assessment_activities.AssessmentListActivity" />
+        <activity android:name=".activities.assessment_activities.AddAssessmentActivity" />
+        <activity android:name=".activities.assessment_activities.AssessmentDetailsActivity"></activity>
     </application>
 
 </manifest>

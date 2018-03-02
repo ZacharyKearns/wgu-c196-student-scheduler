@@ -1,5 +1,6 @@
-package ca.zacharykearns.studentscheduler;
+package ca.zacharykearns.studentscheduler.activities.course_activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,10 +13,12 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import ca.zacharykearns.studentscheduler.adapter.CourseListAdapter;
-import ca.zacharykearns.studentscheduler.db.DBHelper;
-import ca.zacharykearns.studentscheduler.model.Course;
-import ca.zacharykearns.studentscheduler.model.Term;
+import ca.zacharykearns.studentscheduler.R;
+import ca.zacharykearns.studentscheduler.activities.term_activities.TermDetailsActivity;
+import ca.zacharykearns.studentscheduler.adapters.CourseListAdapter;
+import ca.zacharykearns.studentscheduler.database.DBHelper;
+import ca.zacharykearns.studentscheduler.models.Course;
+import ca.zacharykearns.studentscheduler.models.Term;
 
 public class CourseListActivity extends AppCompatActivity {
 
@@ -44,9 +47,9 @@ public class CourseListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_add:
-                return startAddCourseActivity(item.getTitle().toString());
+                return switchActivity(AddCourseActivity.class, item.getTitle().toString(), null);
             case android.R.id.home:
-                return startTermDetailsActivity();
+                return switchActivity(TermDetailsActivity.class, null, null);
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -62,26 +65,21 @@ public class CourseListActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Course mCourse = (Course) adapterView.getAdapter().getItem(i);
-                        Intent intent = new Intent(view.getContext(), CourseDetailsActivity.class);
-                        intent.putExtra("course", mCourse);
-                        startActivity(intent);
+                        switchActivity(CourseDetailsActivity.class, null, mCourse);
                     }
                 }
         );
     }
 
-    private boolean startAddCourseActivity(String type) {
-        Intent i = new Intent(this, AddCourseActivity.class);
-        i.putExtra("type", type);
+    private boolean switchActivity(Class<?> cls, String type, Course course) {
+        Intent i = new Intent(this, cls);
+        if (cls.equals(AddCourseActivity.class)) {
+            i.putExtra("type", type);
+        } else if (cls.equals(CourseDetailsActivity.class)) {
+            i.putExtra("course", course);
+        }
         i.putExtra("term", mTerm);
         startActivity(i);
-        return true;
-    }
-
-    private boolean startTermDetailsActivity() {
-        Intent i1 = new Intent(this, TermDetailsActivity.class);
-        i1.putExtra("term", mTerm);
-        startActivity(i1);
         return true;
     }
 }

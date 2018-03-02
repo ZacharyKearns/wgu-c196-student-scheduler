@@ -1,17 +1,17 @@
-package ca.zacharykearns.studentscheduler;
+package ca.zacharykearns.studentscheduler.activities.term_activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import ca.zacharykearns.studentscheduler.db.DBHelper;
-import ca.zacharykearns.studentscheduler.model.Term;
+import ca.zacharykearns.studentscheduler.R;
+import ca.zacharykearns.studentscheduler.Util;
+import ca.zacharykearns.studentscheduler.database.DBHelper;
+import ca.zacharykearns.studentscheduler.models.Term;
 
 public class AddTermActivity extends AppCompatActivity {
 
@@ -29,7 +29,6 @@ public class AddTermActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_term);
-        setTitle("Add Term");
         mDBHelper = new DBHelper(this);
         mTitleInput = findViewById(R.id.title_input);
         mStartInput = findViewById(R.id.start_input);
@@ -37,6 +36,8 @@ public class AddTermActivity extends AppCompatActivity {
         mIntent = getIntent();
         mTerm = mIntent.getStringExtra("type").equals("ADD") ?
                 null : mDBHelper.getTerm(((Term) mIntent.getSerializableExtra("term")).getmTermId());
+        String mTitle = mTerm == null ? "Add" : "Edit";
+        setTitle(mTitle + " Term");
         setInputs();
     }
 
@@ -52,7 +53,7 @@ public class AddTermActivity extends AppCompatActivity {
             case R.id.menu_save:
                 return saveTerm();
             case R.id.menu_cancel:
-                return startPreviousActivity();
+                return switchActivity();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -67,8 +68,8 @@ public class AddTermActivity extends AppCompatActivity {
     }
 
     private boolean saveTerm() {
-        if (mTitleInput.getText().toString().trim().equals("")) {
-            Toast.makeText(getBaseContext(), "Title can't be empty", Toast.LENGTH_SHORT).show();
+        if (mTitleInput.getText().toString().trim().isEmpty()) {
+            Toast.makeText(getBaseContext(), "Title cannot be empty", Toast.LENGTH_SHORT).show();
         } else if (!Util.checkDate(mStartInput.getText().toString())) {
             Toast.makeText(getBaseContext(), "Invalid start date", Toast.LENGTH_SHORT).show();
         } else if (!Util.checkDate(mEndInput.getText().toString())) {
@@ -96,12 +97,12 @@ public class AddTermActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "Add Failed", Toast.LENGTH_SHORT).show();
                 }
             }
-            startPreviousActivity();
+            switchActivity();
         }
         return true;
     }
 
-    private boolean startPreviousActivity() {
+    private boolean switchActivity() {
         String previous = mIntent.getStringExtra("type");
         Intent i;
         if (previous.equals("ADD")) {

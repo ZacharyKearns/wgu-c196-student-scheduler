@@ -1,4 +1,4 @@
-package ca.zacharykearns.studentscheduler;
+package ca.zacharykearns.studentscheduler.activities.term_activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,9 +11,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import ca.zacharykearns.studentscheduler.db.DBHelper;
-import ca.zacharykearns.studentscheduler.model.Course;
-import ca.zacharykearns.studentscheduler.model.Term;
+import ca.zacharykearns.studentscheduler.R;
+import ca.zacharykearns.studentscheduler.activities.course_activities.CourseListActivity;
+import ca.zacharykearns.studentscheduler.database.DBHelper;
+import ca.zacharykearns.studentscheduler.models.Course;
+import ca.zacharykearns.studentscheduler.models.Term;
 
 public class TermDetailsActivity extends AppCompatActivity {
 
@@ -41,7 +43,7 @@ public class TermDetailsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_edit:
-                return startAddTermActivity(item.getTitle().toString());
+                return switchActivity(AddTermActivity.class, item.getTitle().toString());
             case R.id.menu_delete:
                 return deleteTerm();
             default:
@@ -50,9 +52,7 @@ public class TermDetailsActivity extends AppCompatActivity {
     }
 
     public void viewCoursesButtonClick(View view) {
-        Intent i = new Intent(this, CourseListActivity.class);
-        i.putExtra("term", mTerm);
-        startActivity(i);
+        switchActivity(CourseListActivity.class, null);
     }
 
     private void setTextViews() {
@@ -64,10 +64,14 @@ public class TermDetailsActivity extends AppCompatActivity {
         mEnd.setText(mTerm.getmEnd());
     }
 
-    private boolean startAddTermActivity(String type) {
-        Intent i = new Intent(this, AddTermActivity.class);
-        i.putExtra("type", type);
-        i.putExtra("term", mTerm);
+    private boolean switchActivity(Class<?> cls, String type) {
+        Intent i = new Intent(this, cls);
+        if (cls.equals(CourseListActivity.class)) {
+            i.putExtra("term", mTerm);
+        } else if (cls.equals(AddTermActivity.class)) {
+            i.putExtra("type", type);
+            i.putExtra("term", mTerm);
+        }
         startActivity(i);
         return true;
     }
@@ -82,9 +86,8 @@ public class TermDetailsActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Delete Failed", Toast.LENGTH_SHORT).show();
             }
+            switchActivity(TermListActivity.class, null);
         }
-        Intent i = new Intent(this, TermListActivity.class);
-        startActivity(i);
         return true;
     }
 }

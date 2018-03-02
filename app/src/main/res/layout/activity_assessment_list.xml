@@ -3,14 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ca.zacharykearns.studentscheduler.activities.term_activities.TermListActivity">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    tools:context="ca.zacharykearns.studentscheduler.activities.assessment_activities.AssessmentListActivity">
 
     <ListView
-        android:id="@+id/list_view_terms"
+        android:id="@+id/list_view_assessments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="8dp"
