@@ -17,7 +17,7 @@ import ca.zacharykearns.studentscheduler.models.Course;
 public class CourseListAdapter extends ArrayAdapter<Course> {
 
     public CourseListAdapter(@NonNull Context context, ArrayList<Course> courses) {
-        super(context, R.layout.course_list_row, courses);
+        super(context, R.layout.list_row_course, courses);
     }
 
     @NonNull
@@ -25,7 +25,7 @@ public class CourseListAdapter extends ArrayAdapter<Course> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.course_list_row, parent, false);
+            convertView = inflater.inflate(R.layout.list_row_course, parent, false);
             Course mSingleCourseItem = getItem(position);
             TextView mTextCourse = convertView.findViewById(R.id.text_course);
             mTextCourse.setText(mSingleCourseItem.getmTitle());

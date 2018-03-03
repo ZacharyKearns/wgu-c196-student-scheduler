@@ -17,7 +17,7 @@ import ca.zacharykearns.studentscheduler.models.Term;
 public class TermListAdapter extends ArrayAdapter<Term> {
 
     public TermListAdapter(@NonNull Context context, ArrayList<Term> terms) {
-        super(context, R.layout.term_list_row, terms);
+        super(context, R.layout.list_row_term, terms);
     }
 
     @NonNull
@@ -25,7 +25,7 @@ public class TermListAdapter extends ArrayAdapter<Term> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.term_list_row, parent, false);
+            convertView = inflater.inflate(R.layout.list_row_term, parent, false);
             Term mSingleTermItem = getItem(position);
             TextView mTextTerm = convertView.findViewById(R.id.text_term);
             mTextTerm.setText(mSingleTermItem.getmTitle());

@@ -139,14 +139,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/course_mentors_edit_heading"
+            android:text="@string/edit_heading"
             android:textColor="#000"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/course_mentors_delete_heading"
+            android:text="@string/delete_heading"
             android:textColor="#000"/>
     </LinearLayout>
 

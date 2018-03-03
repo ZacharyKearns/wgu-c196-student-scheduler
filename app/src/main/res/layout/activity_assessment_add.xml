@@ -72,4 +72,64 @@
             android:hint="@string/date_format"/>
     </LinearLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/due_input_row"
+        android:text="@string/goal_date_heading"
+        android:layout_margin="8dp"
+        android:textSize="20sp"
+        android:textColor="#000"
+        android:id="@+id/goal_date_heading"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/goal_date_heading"
+        android:layout_margin="8dp"
+        android:orientation="horizontal"
+        android:id="@+id/goal_date_headings">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight=".9"
+            android:text="@string/description_heading"
+            android:textColor="#000" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight=".9"
+            android:text="@string/date_heading"
+            android:textColor="#000" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/edit_heading"
+            android:textColor="#000"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/delete_heading"
+            android:textColor="#000"/>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list_view_goal_dates"
+        android:layout_below="@id/goal_date_headings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/list_view_goal_dates"
+        android:text="@string/add_goal_date_button"
+        android:id="@+id/button_add_goal_date"/>
+
 </RelativeLayout>

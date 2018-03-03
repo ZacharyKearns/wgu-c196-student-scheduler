@@ -4,37 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:id="@+id/mentor_list_row">
+    android:id="@+id/goal_date_list_row">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight=".95"
         android:gravity="center_vertical"
-        android:id="@+id/mentor_list_name"
-        android:text="@string/course_mentors_name_heading"/>
+        android:id="@+id/description"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight=".95"
         android:gravity="center_vertical"
-        android:id="@+id/mentor_list_phone"
-        android:text="@string/course_mentors_phone_heading"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight=".95"
-        android:gravity="center_vertical"
-        android:id="@+id/mentor_list_email"
-        android:text="@string/course_mentors_email_heading" />
+        android:id="@+id/date"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="@string/course_mentors_edit_heading"
+        android:text="@string/edit_heading"
         android:textSize="10sp"
         android:id="@+id/button_edit"/>
 
@@ -42,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="@string/course_mentors_delete_heading"
+        android:text="@string/delete_heading"
         android:textSize="10sp"
         android:id="@+id/button_delete"/>
 

@@ -69,6 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/term_end"
         android:onClick="viewCoursesButtonClick"
-        android:text="@string/button_view_courses" />
+        android:text="@string/button_view_courses"
+        android:layout_margin="8dp"/>
 
 </RelativeLayout>

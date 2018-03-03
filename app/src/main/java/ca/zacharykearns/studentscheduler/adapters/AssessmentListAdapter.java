@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 import ca.zacharykearns.studentscheduler.R;
 import ca.zacharykearns.studentscheduler.models.Assessment;
-import ca.zacharykearns.studentscheduler.models.Term;
 
 /**
  * Created by zacharykearns on 2018-03-02.
@@ -22,7 +21,7 @@ import ca.zacharykearns.studentscheduler.models.Term;
 public class AssessmentListAdapter extends ArrayAdapter<Assessment> {
 
     public AssessmentListAdapter(@NonNull Context context, ArrayList<Assessment> assessments) {
-        super(context, R.layout.assessment_list_row, assessments);
+        super(context, R.layout.list_row_assessment, assessments);
     }
 
     @NonNull
@@ -30,7 +29,7 @@ public class AssessmentListAdapter extends ArrayAdapter<Assessment> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.assessment_list_row, parent, false);
+            convertView = inflater.inflate(R.layout.list_row_assessment, parent, false);
             Assessment mSingleAssessmentItem = getItem(position);
             TextView mTextAssessment = convertView.findViewById(R.id.text_assessment);
             mTextAssessment.setText(mSingleAssessmentItem.getmTitle());

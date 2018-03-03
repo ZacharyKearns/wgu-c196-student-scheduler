@@ -17,7 +17,7 @@ import ca.zacharykearns.studentscheduler.models.Mentor;
 public class MentorListAdapter extends ArrayAdapter<Mentor> {
 
     public MentorListAdapter(@NonNull Context context, ArrayList<Mentor> mentors) {
-        super(context, R.layout.mentor_list_row, mentors);
+        super(context, R.layout.list_row_mentor, mentors);
     }
 
     @NonNull
@@ -25,7 +25,7 @@ public class MentorListAdapter extends ArrayAdapter<Mentor> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.mentor_list_row, parent, false);
+            convertView = inflater.inflate(R.layout.list_row_mentor, parent, false);
             Mentor mSingleMentorItem = getItem(position);
             TextView mName = convertView.findViewById(R.id.mentor_list_name);
             TextView mPhone = convertView.findViewById(R.id.mentor_list_phone);

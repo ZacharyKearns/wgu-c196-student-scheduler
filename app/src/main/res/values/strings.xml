@@ -8,6 +8,8 @@
     <string name="course_status_label">Status:</string>
     <string name="date_format">yyyy-mm-dd</string>
     <string name="list_arrow"><![CDATA[>]]></string>
+    <string name="edit_heading">Edit</string>
+    <string name="delete_heading">Delete</string>
 
     <!-- Menus -->
     <string name="add_menu">ADD</string>
@@ -15,18 +17,21 @@
     <string name="cancel_menu">CANCEL</string>
     <string name="edit_menu">EDIT</string>
     <string name="delete_menu">DELETE</string>
+    <string name="share_menu">SHARE</string>
 
-    <!-- activity_add_assessment -->
+    <activity_assessment_addment -->
     <string name="type_label">Type:</string>
     <string name="due_date_label">Due Date:</string>
+    <string name="goal_date_heading">Goal Dates</string>
+    <string name="description_heading">Description</string>
+    <string name="date_heading">Date</string>
+    <string name="add_goal_date_button">Add Goal Date</string>
 
-    <!-- activity_add_course -->
+    <activity_course_addurse -->
     <string name="course_mentors_label">Mentors</string>
     <string name="course_mentors_name_heading">Name</string>
     <string name="course_mentors_phone_heading">Phone</string>
     <string name="course_mentors_email_heading">Email</string>
-    <string name="course_mentors_edit_heading">Edit</string>
-    <string name="course_mentors_delete_heading">Delete</string>
     <string name="course_add_mentor_button">Add Mentor</string>
 
     <!-- activity_course_details -->
@@ -35,19 +40,25 @@
     <string name="course_end_alert_label">Course End Alert:</string>
     <string name="course_end_alert_value">ON</string>
     <string name="view_assessments">View Assessments</string>
+    <string name="view_notes">View Notes</string>
 
     <!-- activity_main -->
     <string name="main_button_terms">Terms</string>
 
+    <!-- activity_notes -->
+    <string name="note_title">Notes</string>
+    <string name="note_hint">Enter a note</string>
+    <string name="note_add">Add Note</string>
+
     <!-- activity_term_details -->
     <string name="button_view_courses">View Courses</string>
 
-    <!-- assessment_list_row -->
+    <list_row_assessment_row -->
     <string name="assessment_list_view_assessment">View Assessment</string>
 
-    <!-- course_list_row -->
+    <list_row_course_row -->
     <string name="course_list_view_course">View Course</string>
 
-    <!-- term_list_row -->
+    <list_row_term_row -->
     <string name="view_term">View Term</string>
 </resources>

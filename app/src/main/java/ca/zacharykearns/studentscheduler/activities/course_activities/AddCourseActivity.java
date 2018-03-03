@@ -20,8 +20,6 @@ import java.util.ArrayList;
 
 import ca.zacharykearns.studentscheduler.R;
 import ca.zacharykearns.studentscheduler.Util;
-import ca.zacharykearns.studentscheduler.activities.term_activities.TermDetailsActivity;
-import ca.zacharykearns.studentscheduler.activities.term_activities.TermListActivity;
 import ca.zacharykearns.studentscheduler.adapters.AddMentorListAdapter;
 import ca.zacharykearns.studentscheduler.database.DBHelper;
 import ca.zacharykearns.studentscheduler.models.Course;
@@ -45,7 +43,7 @@ public class AddCourseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_course);
+        setContentView(R.layout.activity_course_add);
         mIntent = getIntent();
         String title = mIntent.getStringExtra("type").equals("ADD") ? "Add" : "Edit";
         setTitle(title + " Course");

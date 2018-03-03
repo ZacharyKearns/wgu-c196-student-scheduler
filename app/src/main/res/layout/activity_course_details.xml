@@ -189,6 +189,17 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/list_view_mentors"
         android:onClick="viewAssessmentsButtonClick"
-        android:text="@string/view_assessments" />
+        android:text="@string/view_assessments"
+        android:layout_margin="8dp"/>
+
+    <Button
+        android:id="@+id/button_view_notes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/button_view_assessments"
+        android:layout_below="@id/list_view_mentors"
+        android:onClick="viewNotesButtonClick"
+        android:text="@string/view_notes"
+        android:layout_margin="8dp"/>
 
 </RelativeLayout>

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import ca.zacharykearns.studentscheduler.models.Assessment;
 import ca.zacharykearns.studentscheduler.models.Course;
 import ca.zacharykearns.studentscheduler.models.Mentor;
+import ca.zacharykearns.studentscheduler.models.Note;
 import ca.zacharykearns.studentscheduler.models.Term;
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -168,6 +169,14 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public void insertNote(int courseId, String note) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(NOTE_COLUMN_COURSE_ID, courseId);
+        cv.put(NOTE_COLUMN_NOTE, note);
+        db.insert(NOTE_TABLE_NAME, null, cv);
+    }
+
     public boolean updateTerm(int id, String title, String start, String end) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -230,9 +239,29 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public void updateNote(int id, String note) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(NOTE_COLUMN_NOTE, note);
+        db.update(
+                NOTE_TABLE_NAME,
+                cv,
+                NOTE_COLUMN_ID + " = ?",
+                new String[] { Integer.toString(id)}
+        );
+    }
+
     public boolean deleteTerm(int termId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TERM_TABLE_NAME, TERM_COLUMN_ID + " = " + termId, null);
+        return true;
+    }
+
+    public boolean deleteCourse(int courseId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(COURSE_TABLE_NAME, COURSE_COLUMN_ID + " = " + courseId, null);
+        db.delete(ASSESSMENT_TABLE_NAME, ASSESSMENT_COLUMN_COURSE_ID + " = " + courseId, null);
+        db.delete(NOTE_TABLE_NAME, NOTE_COLUMN_COURSE_ID + " = " + courseId, null);
         return true;
     }
 
@@ -241,6 +270,12 @@ public class DBHelper extends SQLiteOpenHelper {
         db.delete(ASSESSMENT_TABLE_NAME, ASSESSMENT_COLUMN_ID + " = " + assessmentId, null);
         return true;
     }
+
+    public void deleteNote(int noteId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(NOTE_TABLE_NAME, NOTE_COLUMN_ID + " = " + noteId, null);
+    }
+
 
     public Term getTerm(int termId) {
         Term term;
@@ -368,6 +403,25 @@ public class DBHelper extends SQLiteOpenHelper {
             String mDue = res.getString(3);
             int mCourseId = res.getInt(4);
             a.add(new Assessment(mId, mTitle, mType, mDue, mCourseId));
+            res.moveToNext();
+        }
+        res.close();
+        return a;
+    }
+
+    public ArrayList<Note> getNotes(int courseId) {
+        ArrayList<Note> a = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery(
+                "SELECT * FROM " + NOTE_TABLE_NAME + " WHERE " + NOTE_COLUMN_COURSE_ID + " = " + courseId,
+                null
+        );
+        res.moveToFirst();
+        while (!res.isAfterLast()) {
+            int mId = res.getInt(0);
+            String mNote = res.getString(1);
+            int mCourseId = res.getInt(2);
+            a.add(new Note(mId, mNote, mCourseId));
             res.moveToNext();
         }
         res.close();

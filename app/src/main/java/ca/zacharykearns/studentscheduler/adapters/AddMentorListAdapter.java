@@ -25,7 +25,7 @@ public class AddMentorListAdapter extends ArrayAdapter<Mentor> {
     private Context mContext;
 
     public AddMentorListAdapter(@NonNull Context context, ArrayList<Mentor> mentors) {
-        super(context, R.layout.add_mentor_list_row, mentors);
+        super(context, R.layout.list_row_add_mentor, mentors);
         mMentors = mentors;
         mContext = context;
     }
@@ -35,7 +35,7 @@ public class AddMentorListAdapter extends ArrayAdapter<Mentor> {
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.add_mentor_list_row, parent, false);
+            convertView = inflater.inflate(R.layout.list_row_add_mentor, parent, false);
         }
         Mentor mSingleMentorItem = getItem(position);
         TextView mName = convertView.findViewById(R.id.mentor_list_name);

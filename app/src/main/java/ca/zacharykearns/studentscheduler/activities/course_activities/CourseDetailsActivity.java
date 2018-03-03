@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -72,6 +73,10 @@ public class CourseDetailsActivity extends AppCompatActivity {
         switchActivity(AssessmentListActivity.class, null);
     }
 
+    public void viewNotesButtonClick(View view) {
+        switchActivity(NotesActivity.class, null);
+    }
+
     private void setMentorListView() {
         ArrayList<Mentor> mMentorList = mDBHelper.getMentors(mCourse.getmCourseId());
         ListView mListView = findViewById(R.id.list_view_mentors);
@@ -81,7 +86,8 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
     private boolean switchActivity(Class<?> cls, String type) {
         Intent i = new Intent(this, cls);
-        if (cls.equals(AssessmentListActivity.class)) {
+        if (cls.equals(AssessmentListActivity.class) ||
+                cls.equals(NotesActivity.class)) {
             i.putExtra("course", mCourse);
         } else if (cls.equals(AddCourseActivity.class)) {
             i.putExtra("type", type);
@@ -93,6 +99,12 @@ public class CourseDetailsActivity extends AppCompatActivity {
     }
 
     private boolean deleteCourse() {
+        if (mDBHelper.deleteCourse(mCourse.getmCourseId())) {
+            Toast.makeText(this, "Delete Successful", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Delete Failed", Toast.LENGTH_SHORT).show();
+        }
+        switchActivity(CourseListActivity.class, null);
         return true;
     }
 }

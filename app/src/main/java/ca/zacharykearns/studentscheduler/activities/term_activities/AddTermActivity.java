@@ -28,7 +28,7 @@ public class AddTermActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_term);
+        setContentView(R.layout.activity_term_add);
         mDBHelper = new DBHelper(this);
         mTitleInput = findViewById(R.id.title_input);
         mStartInput = findViewById(R.id.start_input);
