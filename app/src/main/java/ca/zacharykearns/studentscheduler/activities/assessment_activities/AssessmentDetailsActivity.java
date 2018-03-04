@@ -5,16 +5,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import ca.zacharykearns.studentscheduler.R;
 import ca.zacharykearns.studentscheduler.activities.course_activities.CourseListActivity;
 import ca.zacharykearns.studentscheduler.activities.term_activities.AddTermActivity;
 import ca.zacharykearns.studentscheduler.activities.term_activities.TermListActivity;
+import ca.zacharykearns.studentscheduler.adapters.GoalDateListAdapter;
 import ca.zacharykearns.studentscheduler.database.DBHelper;
 import ca.zacharykearns.studentscheduler.models.Assessment;
 import ca.zacharykearns.studentscheduler.models.Course;
+import ca.zacharykearns.studentscheduler.models.GoalDate;
 import ca.zacharykearns.studentscheduler.models.Term;
 
 public class AssessmentDetailsActivity extends AppCompatActivity {
@@ -38,6 +44,7 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
         mTerm = mDBHelper.getTerm(((Term) mIntent.getSerializableExtra("term")).getmTermId());
         mCourse = mDBHelper.getCourse(((Course) mIntent.getSerializableExtra("course")).getmCourseId());
         setTextViews();
+        setGoalDateListView();
     }
 
     @Override
@@ -79,6 +86,13 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
         mTitle.setText(mAssessment.getmTitle());
         mType.setText(mAssessment.getmType());
         mDue.setText(mAssessment.getmDue());
+    }
+
+    private void setGoalDateListView() {
+        ArrayList<GoalDate> mGoalDateList = mDBHelper.getGoalDates(mAssessment.getmAssessmentId());
+        ListView mListView = findViewById(R.id.list_view_goal_dates);
+        ListAdapter mAdapter = new GoalDateListAdapter(this, mGoalDateList);
+        mListView.setAdapter(mAdapter);
     }
 
     private boolean deleteAssessment() {

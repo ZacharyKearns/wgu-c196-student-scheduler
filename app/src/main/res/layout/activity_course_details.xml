@@ -7,7 +7,7 @@
     <TextView
         android:id="@+id/course_title"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:gravity="center_vertical|center_horizontal"
         android:textColor="#000"
@@ -52,13 +52,18 @@
             android:textColor="#000"
             android:textSize="15sp" />
         <TextView
-            android:id="@+id/course_start_date_alert_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/course_start_alert_value"
-            android:textSize="15sp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"/>
+            android:text="@string/alert_off"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:id="@+id/start_toggle"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/alert_default"
+            android:id="@+id/start_alert_button"/>
     </LinearLayout>
 
     <LinearLayout
@@ -99,16 +104,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/course_end_alert_label"
-            android:textColor="#000"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textColor="#000"/>
         <TextView
-            android:id="@+id/course_end_date_alert_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/course_end_alert_value"
-            android:textSize="15sp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"/>
+            android:text="@string/alert_off"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:id="@+id/end_toggle"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/alert_default"
+            android:id="@+id/end_alert_button"/>
     </LinearLayout>
 
     <LinearLayout
@@ -196,7 +206,7 @@
         android:id="@+id/button_view_notes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/button_view_assessments"
+        android:layout_toEndOf="@id/button_view_assessments"
         android:layout_below="@id/list_view_mentors"
         android:onClick="viewNotesButtonClick"
         android:text="@string/view_notes"

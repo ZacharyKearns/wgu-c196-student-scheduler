@@ -7,6 +7,7 @@ import android.view.View;
 
 import ca.zacharykearns.studentscheduler.R;
 import ca.zacharykearns.studentscheduler.activities.term_activities.TermListActivity;
+import ca.zacharykearns.studentscheduler.database.DBHelper;
 
 public class MainActivity extends AppCompatActivity {
 

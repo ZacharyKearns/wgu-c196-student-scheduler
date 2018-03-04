@@ -1,12 +1,20 @@
 package ca.zacharykearns.studentscheduler.activities.assessment_activities;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -14,9 +22,11 @@ import java.util.ArrayList;
 
 import ca.zacharykearns.studentscheduler.R;
 import ca.zacharykearns.studentscheduler.Util;
+import ca.zacharykearns.studentscheduler.adapters.AddGoalDateListAdapter;
 import ca.zacharykearns.studentscheduler.database.DBHelper;
 import ca.zacharykearns.studentscheduler.models.Assessment;
 import ca.zacharykearns.studentscheduler.models.Course;
+import ca.zacharykearns.studentscheduler.models.GoalDate;
 import ca.zacharykearns.studentscheduler.models.Term;
 
 public class AddAssessmentActivity extends AppCompatActivity {
@@ -29,6 +39,8 @@ public class AddAssessmentActivity extends AppCompatActivity {
     private EditText mTitleInput;
     private EditText mDueInput;
     private Assessment mAssessment;
+    private ArrayList<GoalDate> mGoalDateList;
+    private final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +52,14 @@ public class AddAssessmentActivity extends AppCompatActivity {
         mTerm = mDBHelper.getTerm(((Term) mIntent.getSerializableExtra("term")).getmTermId());
         mAssessment = mIntent.getStringExtra("type").equals("ADD") ?
                 null : mDBHelper.getAssessment(((Assessment) mIntent.getSerializableExtra("assessment")).getmAssessmentId());
+        setGoalDateListView();
+        Button mAddGoalDateButton = findViewById(R.id.button_add_goal_date);
+        mAddGoalDateButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addGoalDateDialog();
+            }
+        });
         String title = mIntent.getStringExtra("type").equals("ADD") ? "Add" : "Edit";
         setTitle(title + " Assessment");
         mSpinner = findViewById(R.id.type_spinner);
@@ -102,6 +122,53 @@ public class AddAssessmentActivity extends AppCompatActivity {
         }
     }
 
+    private void setGoalDateListView() {
+        if (mIntent.getStringExtra("type").equals("ADD")) {
+            mGoalDateList = new ArrayList<>();
+        } else {
+            mGoalDateList = mDBHelper.getGoalDates(mAssessment.getmAssessmentId());
+        }
+        ListView mListView = findViewById(R.id.list_view_goal_dates);
+        ListAdapter mAdapter = new AddGoalDateListAdapter(this, mGoalDateList);
+        mListView.setAdapter(mAdapter);
+    }
+
+    private void addGoalDateDialog() {
+        LayoutInflater li = LayoutInflater.from(context);
+        View addGoalDateDialog = li.inflate(R.layout.dialog_goal_date, null);
+        AlertDialog.Builder adb = new AlertDialog.Builder(context);
+        adb.setView(addGoalDateDialog);
+        final EditText descriptionInput = addGoalDateDialog.findViewById(R.id.description);
+        final EditText dateInput = addGoalDateDialog.findViewById(R.id.date);
+        adb
+                .setCancelable(false)
+                .setPositiveButton("ADD",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if (descriptionInput.getText().toString().trim().isEmpty()) {
+                                    Toast.makeText(getBaseContext(), "Fields cannot be blank", Toast.LENGTH_SHORT).show();
+                                } else if (!Util.checkDate(dateInput.getText().toString())) {
+                                    Toast.makeText(getBaseContext(), "Invalid date format", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    mGoalDateList.add(new GoalDate(
+                                            descriptionInput.getText().toString(),
+                                            dateInput.getText().toString()
+                                    ));
+                                }
+                            }
+                        })
+                .setNegativeButton("CANCEL",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+        AlertDialog alertDialog = adb.create();
+        alertDialog.show();
+    }
+
     private boolean saveAssessment() {
         if (mTitleInput.getText().toString().trim().isEmpty()) {
             Toast.makeText(getBaseContext(), "Title cannot be empty", Toast.LENGTH_SHORT).show();
@@ -113,7 +180,8 @@ public class AddAssessmentActivity extends AppCompatActivity {
                         mTitleInput.getText().toString(),
                         mSpinner.getSelectedItem().toString(),
                         mDueInput.getText().toString(),
-                        mCourse.getmCourseId()
+                        mCourse.getmCourseId(),
+                        mGoalDateList
                 )) {
                     Toast.makeText(getBaseContext(), "Add Successful", Toast.LENGTH_SHORT).show();
                 } else {
@@ -124,14 +192,14 @@ public class AddAssessmentActivity extends AppCompatActivity {
                         mAssessment.getmAssessmentId(),
                         mTitleInput.getText().toString(),
                         mSpinner.getSelectedItem().toString(),
-                        mDueInput.getText().toString()
+                        mDueInput.getText().toString(),
+                        mGoalDateList
                 )) {
                     Toast.makeText(getBaseContext(), "Edit Successful", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getBaseContext(), "Edit Failed", Toast.LENGTH_SHORT).show();
                 }
             }
-
             switchActivity();
         }
         return true;

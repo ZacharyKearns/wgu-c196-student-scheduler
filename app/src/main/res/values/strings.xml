@@ -10,6 +10,8 @@
     <string name="list_arrow"><![CDATA[>]]></string>
     <string name="edit_heading">Edit</string>
     <string name="delete_heading">Delete</string>
+    <string name="alert_default">TOGGLE</string>
+    <string name="alert_off">Off</string>
 
     <!-- Menus -->
     <string name="add_menu">ADD</string>
@@ -19,7 +21,7 @@
     <string name="delete_menu">DELETE</string>
     <string name="share_menu">SHARE</string>
 
-    <activity_assessment_addment -->
+    <!-- activity_assessment_add  -->
     <string name="type_label">Type:</string>
     <string name="due_date_label">Due Date:</string>
     <string name="goal_date_heading">Goal Dates</string>
@@ -27,7 +29,7 @@
     <string name="date_heading">Date</string>
     <string name="add_goal_date_button">Add Goal Date</string>
 
-    <activity_course_addurse -->
+    <!-- activity_course_add -->
     <string name="course_mentors_label">Mentors</string>
     <string name="course_mentors_name_heading">Name</string>
     <string name="course_mentors_phone_heading">Phone</string>
@@ -36,11 +38,13 @@
 
     <!-- activity_course_details -->
     <string name="course_start_alert_label">Course Start Alert:</string>
-    <string name="course_start_alert_value">ON</string>
     <string name="course_end_alert_label">Course End Alert:</string>
-    <string name="course_end_alert_value">ON</string>
     <string name="view_assessments">View Assessments</string>
     <string name="view_notes">View Notes</string>
+
+    <!-- activity_assessment_details -->
+    <string name="goal_date_alert_heading">Alert</string>
+    <string name="alert_toggle">Toggle</string>
 
     <!-- activity_main -->
     <string name="main_button_terms">Terms</string>
@@ -53,12 +57,12 @@
     <!-- activity_term_details -->
     <string name="button_view_courses">View Courses</string>
 
-    <list_row_assessment_row -->
+    <!-- list_row_assessment_row -->
     <string name="assessment_list_view_assessment">View Assessment</string>
 
-    <list_row_course_row -->
+    <!-- list_row_course_row -->
     <string name="course_list_view_course">View Course</string>
 
-    <list_row_term_row -->
+    <!-- list_row_term_row -->
     <string name="view_term">View Term</string>
 </resources>
